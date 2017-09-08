@@ -3,13 +3,13 @@
 # Copyright © 2012, United States Government, as represented by the
 # Administrator of the National Aeronautics and Space Administration.
 # All rights reserved.
-# 
+#
 # The NASA Tensegrity Robotics Toolkit (NTRT) v1 platform is licensed
 # under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 # http://www.apache.org/licenses/LICENSE-2.0.
-# 
+#
 # Unless required by applicable law or agreed to in writing,
 # software distributed under the License is distributed on an
 # "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
@@ -60,7 +60,7 @@ jsoncpp_pkg=`echo $JSONCPP_URL|awk -F/ '{print $NF}'`  # get the package name fr
 # Check to see if jsoncpp has been built already
 function check_jsoncpp_built()
 {
-    # Check for a library that's created when jsoncpp is built   
+    # Check for a library that's created when jsoncpp is built
     fname=$(find "$JSONCPP_BUILD_DIR" -iname libjsoncpp* 2>/dev/null)
     if [ -f "$fname" ]; then
         return $TRUE
@@ -116,8 +116,8 @@ function build_jsoncpp()
         -DBUILD_SHARED_LIBS=OFF \
         -DBUILD_EXTRAS=ON \
         -DCMAKE_INSTALL_PREFIX="$JSONCPP_INSTALL_PREFIX" \
-        -DCMAKE_C_COMPILER="gcc" \
-        -DCMAKE_CXX_COMPILER="g++" \
+        -DCMAKE_C_COMPILER="clang" \
+        -DCMAKE_CXX_COMPILER="clang++" \
         -DCMAKE_C_FLAGS="-fPIC" \
         -DCMAKE_CXX_FLAGS="-fPIC" \
         -DCMAKE_EXE_LINKER_FLAGS="-fPIC" \
@@ -126,7 +126,7 @@ function build_jsoncpp()
         -DUSE_DOUBLE_PRECISION=OFF \
         -DCMAKE_INSTALL_NAME_DIR="$JSONCPP_INSTALL_PREFIX" || { echo "- ERROR: CMake for JsonCPP failed."; exit 1; }
     #If you turn this on, turn it on in inc.CMakeJsonCPP.txt as well for the NTRT build
-    # Additional jsoncpp options: 
+    # Additional jsoncpp options:
     # -DFRAMEWORK=ON
     # -DBUILD_DEMOS=ON
 

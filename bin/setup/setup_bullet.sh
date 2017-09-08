@@ -3,13 +3,13 @@
 # Copyright © 2012, United States Government, as represented by the
 # Administrator of the National Aeronautics and Space Administration.
 # All rights reserved.
-# 
+#
 # The NASA Tensegrity Robotics Toolkit (NTRT) v1 platform is licensed
 # under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 # http://www.apache.org/licenses/LICENSE-2.0.
-# 
+#
 # Unless required by applicable law or agreed to in writing,
 # software distributed under the License is distributed on an
 # "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
@@ -60,7 +60,7 @@ bullet_pkg=`echo $BULLET_URL|awk -F/ '{print $NF}'`  # get the package name from
 # Check to see if bullet has been built already
 function check_bullet_built()
 {
-    # Check for a library that's created when bullet is built   
+    # Check for a library that's created when bullet is built
     fname=$(find "$BULLET_BUILD_DIR" -iname libBulletCollision.* 2>/dev/null)
     if [ -f "$fname" ]; then
         return $TRUE
@@ -139,13 +139,13 @@ function patch_bullet()
     patch -p5 < "$SETUP_DIR/patches/OpenGLPatch.diff"
 
     popd > /dev/null
-    
+
     # Also fix double free error in btQuickprof
-    
+
     pushd "$BULLET_BUILD_DIR/src/LinearMath" > /dev/null
-    
+
     patch < "$SETUP_DIR/patches/btQuickprof.patch"
-    
+
     popd > /dev/null
 }
 
@@ -164,15 +164,15 @@ function build_bullet()
         -DCMAKE_INSTALL_PREFIX="$BULLET_INSTALL_PREFIX" \
         -DCMAKE_C_FLAGS="-fPIC" \
         -DCMAKE_CXX_FLAGS="-fPIC" \
-        -DCMAKE_C_COMPILER="gcc" \
-        -DCMAKE_CXX_COMPILER="g++" \
+        -DCMAKE_C_COMPILER="clang" \
+        -DCMAKE_CXX_COMPILER="clang++" \
         -DCMAKE_EXE_LINKER_FLAGS="-fPIC" \
         -DCMAKE_MODULE_LINKER_FLAGS="-fPIC" \
         -DCMAKE_SHARED_LINKER_FLAGS="-fPIC" \
         -DUSE_DOUBLE_PRECISION=ON \
         -DCMAKE_INSTALL_NAME_DIR="$BULLET_INSTALL_PREFIX" || { echo "- ERROR: CMake for Bullet Physics failed."; exit 1; }
     #If you turn this on, turn it on in inc.CMakeBullet.txt as well for the NTRT build
-    # Additional bullet options: 
+    # Additional bullet options:
     # -DFRAMEWORK=ON
     # -DBUILD_DEMOS=ON
 
@@ -237,30 +237,30 @@ function main()
 
     ensure_install_prefix_writable $BULLET_INSTALL_PREFIX
 
-    if check_package_installed "$BULLET_INSTALL_PREFIX/lib/libBulletDynamics*"; then
-        echo "- Bullet Physics is installed under prefix $BULLET_INSTALL_PREFIX -- skipping."
-        ensure_bullet_openglsupport
-        env_link_bullet
-        return
-    fi
+    #if check_package_installed "$BULLET_INSTALL_PREFIX/lib/libBulletDynamics*"; then
+    #    echo "- Bullet Physics is installed under prefix $BULLET_INSTALL_PREFIX -- skipping."
+    #    ensure_bullet_openglsupport
+    #    env_link_bullet
+    #    return
+    #fi
 
-    if check_bullet_built; then
-        echo "- Bullet Physics is already built under $BULLET_BUILD_DIR -- skipping."
-        ensure_bullet_openglsupport
-        install_bullet
-        env_link_bullet
-        return
-    fi
-    
+    #if check_bullet_built; then
+    #    echo "- Bullet Physics is already built under $BULLET_BUILD_DIR -- skipping."
+    #    ensure_bullet_openglsupport
+    #    install_bullet
+    #    env_link_bullet
+    #    return
+    #fi
+
     # This may not be the best test - The directory is created at the beginning of the function
     # Is there a way to check a specific line into a file?
-    if check_directory_exists "$BULLET_BUILD_DIR/Demos/OpenGL_FreeGlut/"; then
-        echo "- Bullet Physics patches have already been applied -- skipping."
-        build_bullet
-        install_bullet
-        env_link_bullet
-        return
-    fi
+    #if check_directory_exists "$BULLET_BUILD_DIR/Demos/OpenGL_FreeGlut/"; then
+    #    echo "- Bullet Physics patches have already been applied -- skipping."
+    #    build_bullet
+    #    install_bullet
+    #    env_link_bullet
+    #    return
+    #fi
 
     if check_file_exists "$BULLET_PACKAGE_DIR/CMakeLists.txt"; then
         echo "- Bullet Physics is already unpacked to $BULLET_BUILD_DIR -- skipping."

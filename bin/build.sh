@@ -3,13 +3,13 @@
 # Copyright © 2012, United States Government, as represented by the
 # Administrator of the National Aeronautics and Space Administration.
 # All rights reserved.
-# 
+#
 # The NASA Tensegrity Robotics Toolkit (NTRT) v1 platform is licensed
 # under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 # http://www.apache.org/licenses/LICENSE-2.0.
-# 
+#
 # Unless required by applicable law or agreed to in writing,
 # software distributed under the License is distributed on an
 # "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
@@ -19,7 +19,7 @@
 # Purpose: Build the source tree including libraries and applications.
 # Author:  Ryan Adams, Perry Bhandal
 # Date:    July 2014
-# Notes:   This is intended to be run any time you need to build the 
+# Notes:   This is intended to be run any time you need to build the
 #          source tree.
 
 ##############################################################################
@@ -65,9 +65,9 @@ function usage
     echo "  -h       Show this help message and exit"
     echo "  -c       Run 'make clean' before make/make install on non-library sources"
     echo "  -w       Show compiler warnings when building"
-    echo "  -t       Build test/ rather than src/" 
+    echo "  -t       Build test/ rather than src/"
     echo "  -r       Build test/ rather than src/ *and* run all tests after compilation."
-    echo "  -i       Build test_integration/ rather than src/" 
+    echo "  -i       Build test_integration/ rather than src/"
     echo "  -g       Build test_integration/ rather than src/ *and* run all tests after compilation."
 }
 
@@ -79,7 +79,7 @@ function cmake_cross_platform()
         -DCMAKE_INSTALL_PREFIX="$BASE_DIR/env" \
         -DCMAKE_INSTALL_NAME_DIR="$BASE_DIR/env" \
         -DCMAKE_CXX_FLAGS="$cmake_cxx_flags" \
-        -DCMAKE_CXX_COMPILER="$ENV_BIN_DIR/g++" \
+        -DCMAKE_CXX_COMPILER="$ENV_BIN_DIR/clang++" \
         -DCMAKE_C_FLAGS="-fPIC" \
         -DCMAKE_CXX_FLAGS="-fPIC" \
         -DCMAKE_EXE_LINKER_FLAGS="-fPIC" \
@@ -110,20 +110,20 @@ while getopts ":hcwtrig" opt; do
             CMAKE_COMPILER_WARNINGS_FLAG=true
             ;;
         t)
-            build_target=$BUILD_TEST_DIR 
+            build_target=$BUILD_TEST_DIR
             build_src=$TEST_DIR
             ;;
         r)
-            build_target=$BUILD_TEST_DIR 
+            build_target=$BUILD_TEST_DIR
             build_src=$TEST_DIR
             RUN_ALL_TESTS=true
             ;;
         i)
-            build_target=$BUILD_INTEGRATION_TEST_DIR 
+            build_target=$BUILD_INTEGRATION_TEST_DIR
             build_src=$INTEGRATION_TEST_DIR
             ;;
         g)
-            build_target=$BUILD_INTEGRATION_TEST_DIR 
+            build_target=$BUILD_INTEGRATION_TEST_DIR
             build_src=$INTEGRATION_TEST_DIR
             RUN_INTEGRATION_TESTS=true
             ;;
@@ -194,7 +194,7 @@ if [ "$TO_BUILD" != "" ]; then
     pushd "$build_target/$TO_BUILD" > /dev/null
 else
     pushd "$build_target" > /dev/null
-fi    
+fi
 
 # Make clean if requested
 if $MAKE_CLEAN_FLAG; then
@@ -213,7 +213,7 @@ if $RUN_ALL_TESTS; then
         echo "Build test directory does not exist. Have the tests been compiled?"
         exit 1
     fi
-	
+
 	pushd $BUILD_TEST_DIR > /dev/null
 fi
 
@@ -222,7 +222,7 @@ if $RUN_INTEGRATION_TESTS; then
         echo "Build integration test directory does not exist. Have the tests been compiled?"
         exit 1
     fi
-	
+
 	pushd $BUILD_INTEGRATION_TEST_DIR > /dev/null
 fi
 
@@ -233,7 +233,7 @@ if $RUN_ALL_TESTS || $RUN_INTEGRATION_TESTS; then
         exit 1
     fi
 
-    python ${SHELL_UTILITIES_DIR}/runAllTests.py || { 
+    python ${SHELL_UTILITIES_DIR}/runAllTests.py || {
         echo ""
         echo "=== TEST FAILURE(S) ==="
         echo ""

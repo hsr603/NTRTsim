@@ -116,8 +116,8 @@ function build_yamlcpp()
         -DBUILD_SHARED_LIBS=OFF \
         -DBUILD_EXTRAS=ON \
         -DCMAKE_INSTALL_PREFIX="$YAMLCPP_INSTALL_PREFIX" \
-        -DCMAKE_C_COMPILER="gcc" \
-        -DCMAKE_CXX_COMPILER="g++" \
+        -DCMAKE_C_COMPILER="clang" \
+        -DCMAKE_CXX_COMPILER="clang++" \
         -DCMAKE_C_FLAGS="-fPIC" \
         -DCMAKE_CXX_FLAGS="-fPIC" \
         -DCMAKE_EXE_LINKER_FLAGS="-fPIC" \
