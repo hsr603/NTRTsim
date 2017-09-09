@@ -7,7 +7,7 @@ set(Boost_USE_STATIC_LIBS ON)
 subdirs(
     core
     helpers
-    #learning
+    learning
     util
     sensors
     tgcreator

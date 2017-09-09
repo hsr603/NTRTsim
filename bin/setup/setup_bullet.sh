@@ -237,30 +237,30 @@ function main()
 
     ensure_install_prefix_writable $BULLET_INSTALL_PREFIX
 
-    #if check_package_installed "$BULLET_INSTALL_PREFIX/lib/libBulletDynamics*"; then
-    #    echo "- Bullet Physics is installed under prefix $BULLET_INSTALL_PREFIX -- skipping."
-    #    ensure_bullet_openglsupport
-    #    env_link_bullet
-    #    return
-    #fi
+    if check_package_installed "$BULLET_INSTALL_PREFIX/lib/libBulletDynamics*"; then
+        echo "- Bullet Physics is installed under prefix $BULLET_INSTALL_PREFIX -- skipping."
+        ensure_bullet_openglsupport
+        env_link_bullet
+        return
+    fi
 
-    #if check_bullet_built; then
-    #    echo "- Bullet Physics is already built under $BULLET_BUILD_DIR -- skipping."
-    #    ensure_bullet_openglsupport
-    #    install_bullet
-    #    env_link_bullet
-    #    return
-    #fi
+    if check_bullet_built; then
+        echo "- Bullet Physics is already built under $BULLET_BUILD_DIR -- skipping."
+        ensure_bullet_openglsupport
+        install_bullet
+        env_link_bullet
+        return
+    fi
 
     # This may not be the best test - The directory is created at the beginning of the function
     # Is there a way to check a specific line into a file?
-    #if check_directory_exists "$BULLET_BUILD_DIR/Demos/OpenGL_FreeGlut/"; then
-    #    echo "- Bullet Physics patches have already been applied -- skipping."
-    #    build_bullet
-    #    install_bullet
-    #    env_link_bullet
-    #    return
-    #fi
+    if check_directory_exists "$BULLET_BUILD_DIR/Demos/OpenGL_FreeGlut/"; then
+        echo "- Bullet Physics patches have already been applied -- skipping."
+        build_bullet
+        install_bullet
+        env_link_bullet
+        return
+    fi
 
     if check_file_exists "$BULLET_PACKAGE_DIR/CMakeLists.txt"; then
         echo "- Bullet Physics is already unpacked to $BULLET_BUILD_DIR -- skipping."

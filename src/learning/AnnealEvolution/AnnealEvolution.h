@@ -2,13 +2,13 @@
  * Copyright © 2012, United States Government, as represented by the
  * Administrator of the National Aeronautics and Space Administration.
  * All rights reserved.
- * 
+ *
  * The NASA Tensegrity Robotics Toolkit (NTRT) v1 platform is licensed
  * under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0.
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
@@ -46,15 +46,15 @@ public:
     const std::string suffix;
     /// @todo make this const if we decide to force everyone to put their logs in resources
     std::string resourcePath;
-    
+
 private:
     int populationSize;
     int numberOfControllers;
-    std::tr1::ranlux64_base_01 eng;
+    std::ranlux48_base eng;
     std::vector< AnnealEvoPopulation *> populations;
     std::vector <AnnealEvoMember *>  selectedControllers;
     std::vector< std::vector< double > > scoresOfTheGeneration;
-    
+
 //  double minValue;
 //  double maxValue;
     double leniencyCoef;

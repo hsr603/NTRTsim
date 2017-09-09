@@ -189,18 +189,18 @@ function main()
 
     ensure_install_prefix_writable $NEURALNET_INSTALL_PREFIX
 
-    if check_package_installed "$NEURALNET_INSTALL_PREFIX/lib/libneuralnet*"; then
-        echo "- NeuralNet is installed under prefix $NEURALNET_INSTALL_PREFIX -- skipping."
-        env_link_neuralnet
-        return
-    fi
+    #if check_package_installed "$NEURALNET_INSTALL_PREFIX/lib/libneuralnet*"; then
+    #    echo "- NeuralNet is installed under prefix $NEURALNET_INSTALL_PREFIX -- skipping."
+    #    env_link_neuralnet
+    #    return
+    #fi
 
-    if check_neuralnet_built; then
-        echo "- NeuralNet is already built under $NEURALNET_BUILD_DIR -- skipping."
-        install_neuralnet
-        env_link_neuralnet
-        return
-    fi
+    #if check_neuralnet_built; then
+    #    echo "- NeuralNet is already built under $NEURALNET_BUILD_DIR -- skipping."
+    #    install_neuralnet
+    #    env_link_neuralnet
+    #    return
+    #fi
 
     # @todo: add check neuralnet patched
 

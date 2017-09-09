@@ -2,13 +2,13 @@
  * Copyright © 2012, United States Government, as represented by the
  * Administrator of the National Aeronautics and Space Administration.
  * All rights reserved.
- * 
+ *
  * The NASA Tensegrity Robotics Toolkit (NTRT) v1 platform is licensed
  * under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0.
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
@@ -39,7 +39,7 @@ AnnealEvoMember::AnnealEvoMember(configuration config)
     this->numOutputs=config.getintvalue("numberOfActions");
     this->devBase=config.getDoubleValue("deviation");
     this->monteCarlo=config.getintvalue("MonteCarlo");
-    
+
     statelessParameters.resize(numOutputs);
     for(int i=0;i<numOutputs;i++)
         statelessParameters[i]=rand()*1.0/RAND_MAX;
@@ -51,15 +51,15 @@ AnnealEvoMember::~AnnealEvoMember()
 {
 }
 
-void AnnealEvoMember::mutate(std::tr1::ranlux64_base_01 *eng, double T){
-    
+void AnnealEvoMember::mutate(std::ranlux48_base *eng, double T){
+
     assert (T <= 1.0);
-    std::tr1::uniform_real<double> unif(0, 1);
+    std::uniform_real_distribution<double> unif(0, 1);
 
     //TODO: for each weight of the NN with 0.5 probability mutate it
 
-    double dev = devBase * T / 100.0; 
-    std::tr1::normal_distribution<double> normal(0, dev);
+    double dev = devBase * T / 100.0;
+    std::normal_distribution<double> normal(0, dev);
     for(std::size_t i=0;i<statelessParameters.size();i++)
     {
         double newParam;
@@ -68,7 +68,7 @@ void AnnealEvoMember::mutate(std::tr1::ranlux64_base_01 *eng, double T){
             newParam= unif(*eng);
         }
         else
-        {   
+        {
             double mutAmount = normal(*eng);
               //std::cout<<"param: "<<i<<" dev: "<<dev<<" rand: "<<mutAmount<<endl;
             newParam= statelessParameters[i] + mutAmount;
