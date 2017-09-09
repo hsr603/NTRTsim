@@ -4,15 +4,12 @@ Project(examples)
 subdirs(
     3_prism
     3_prism_serialize
-    contactCables/
+    #contactCables/
     NestedTetrahedrons
     SUPERball
-    learningSpines
+    #learningSpines
     testjson
-    craterEscape
-    IROS_2015/
+    #craterEscape
+    #IROS_2015/
     motorModel/
 )
-
-
-

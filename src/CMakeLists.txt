@@ -1,18 +1,19 @@
 cmake_minimum_required(VERSION 2.6)
 
 PROJECT(NASA_Tensegrity_Robotics_Toolkit)
-
+set(CMAKE_MACOSX_RPATH 1)
+set(Boost_USE_STATIC_LIBS ON)
 # Add your subdirectories here
 subdirs(
     core
     helpers
-    learning
+    #learning
     util
     sensors
     tgcreator
     models
     controllers
-    dev
+    #dev
     examples
     yamlbuilder
 )
@@ -31,8 +32,6 @@ SET(ENV_DIR ${PROJECT_SOURCE_DIR}/../env)
 SET(ENV_INC_DIR ${ENV_DIR}/include)
 SET(ENV_LIB_DIR ${ENV_DIR}/lib)
 
-# Bring in the bullet graphics dependencies, etc. 
+# Bring in the bullet graphics dependencies, etc.
 
 include(inc.CMakeBullet.txt)
-
-
