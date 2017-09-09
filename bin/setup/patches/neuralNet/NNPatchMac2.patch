@@ -1,0 +1,58 @@
+--- /Users/wenrudong/Documents/NTRTsim/env/build/neuralNet/nnImplementationV2/Neural Network v2/neuralNetwork.h	2017-09-09 22:49:21.000000000 +0800
++++ /Users/wenrudong/Documents/NTRTsim/env/build/neuralNet/nnImplementationV2/Neural Network v2/neuralNetwork.new.h	2017-09-09 22:53:05.000000000 +0800
+@@ -9,7 +9,7 @@
+ #define NNetwork
+ 
+ #include "dataReader.h"
+-#include <tr1/random>
++#include <random>
+ 
+ class neuralNetworkTrainer;
+ 
+@@ -21,7 +21,7 @@
+ 
+ 	//number of neurons
+ 	int nInput, nHidden, nOutput;
+-	
++
+ 	//neurons
+ 	double* inputNeurons;
+ 	double* hiddenNeurons;
+@@ -30,11 +30,11 @@
+ 	//weights
+ 	double** wInputHidden;
+ 	double** wHiddenOutput;
+-		
++
+ 	//Friends
+ 	//--------------------------------------------------------------------------------------------
+ 	friend class neuralNetworkTrainer;
+-	
++
+ 	//public methods
+ 	//--------------------------------------------------------------------------------------------
+ 
+@@ -51,19 +51,19 @@
+ 	double getSetAccuracy( std::vector<dataEntry*>& set );
+ 	double getSetMSE( std::vector<dataEntry*>& set );
+ 	void copyWeightFrom(neuralNetwork * nn);
+-    void combineWeights(neuralNetwork* nn1, neuralNetwork* nn2, std::tr1::ranlux64_base_01* eng);
+-	void mutate(std::tr1::ranlux64_base_01 *eng);
++    void combineWeights(neuralNetwork* nn1, neuralNetwork* nn2, std::ranlux48_base* eng);
++	void mutate(std::ranlux48_base *eng);
+ 
+ 	//protected methods
+ 	//--------------------------------------------------------------------------------------------
+ 
+-protected: 
++protected:
+ 
+ 	void initializeWeights();
+ 	inline double activationFunction( double x );
+ 	inline int clampOutput( double x );
+ 	void feedForward( double* pattern );
+-	
++
+ };
+ 
+ #endif

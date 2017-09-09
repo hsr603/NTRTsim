@@ -115,6 +115,10 @@ function patch_neuralnet()
     patch -p6 < "$SETUP_DIR/patches/neuralNet/NNPatch2_1.patch" || { echo "- ERROR: Failed to patch NeuralNet, 2nd patch"; exit 1; }
     patch -p6 < "$SETUP_DIR/patches/neuralNet/NNPatch2_2.patch" || { echo "- ERROR: Failed to patch NeuralNet, 3rd patch"; exit 1; }
 
+    # Clean up tr1 (Wenru, 09/09/2017)
+    patch -p10 < "$SETUP_DIR/patches/neuralNet/NNPatchMac1.patch" || { echo "- ERROR: Failed to patch NeuralNet, 4th patch"; exit 1; }
+    patch -p10 < "$SETUP_DIR/patches/neuralNet/NNPatchMac2.patch" || { echo "- ERROR: Failed to patch NeuralNet, 5th patch"; exit 1; }
+
     popd > /dev/null
 }
 
@@ -134,7 +138,7 @@ function build_neuralnet()
         -DCMAKE_C_FLAGS="-fPIC" \
         -DCMAKE_C_COMPILER="clang" \
         -DCMAKE_CXX_COMPILER="clang++" \
-        -DCMAKE_CXX_FLAGS="-stdlib=libstdc++" \
+        -DCMAKE_CXX_FLAGS="-fPIC" \
         -DCMAKE_EXE_LINKER_FLAGS="-fPIC" \
         -DCMAKE_MODULE_LINKER_FLAGS="-fPIC" \
         -DCMAKE_SHARED_LINKER_FLAGS="-fPIC" \
