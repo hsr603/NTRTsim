@@ -7,9 +7,9 @@ link_directories(${LIB_DIR})
 
 include_directories(.)
 
-# Add a library with the same name as the project. The library will contain all of the 
+# Add a library with the same name as the project. The library will contain all of the
 # files listed along with any files referenced by those files, so you usually only have
-# to include the 'main' files in this list. 
+# to include the 'main' files in this list.
 
 add_library( ${PROJECT_NAME} SHARED
 	NeuroEvolution.cpp
@@ -18,6 +18,4 @@ add_library( ${PROJECT_NAME} SHARED
 )
 
 # Note: FileHelpers seems to be necessary, at least for build on mac...
-target_link_libraries(NeuroEvolution neuralNetwork Configuration)
-
-
+target_link_libraries(NeuroEvolution neuralNetwork Configuration FileHelpers)
