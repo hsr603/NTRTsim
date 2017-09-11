@@ -3,7 +3,7 @@ Project(tetraSpineLearningSine)
 link_directories(${LIB_DIR})
 
 add_library(${PROJECT_NAME} SHARED
-   
+
             tgSineStringControl.cpp
             )
 
@@ -19,6 +19,9 @@ link_libraries(tetraSpineHardware
                 Configuration
                 AnnealEvolution
                 tgOpenGLSupport)
+
+# Added by Wenru Dong on 11 Sep 2017 to build on mac
+target_link_libraries(${PROJECT_NAME} controllers)
 
 add_executable(AppTetraSpineHardwareSine
 	tgSineStringControl.cpp
