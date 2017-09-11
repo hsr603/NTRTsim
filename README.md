@@ -1,5 +1,15 @@
 NASA Tensegrity Robotics Toolkit
 ===============
+11/09/2017
+
+This repository is forked to make changes so that NTRT can now be built on mac running Sierra (10.12).
+
+## Installation on macOS 10.12
+1. Open Terminal, and `cd` into the NTRTsim directory.
+2. Type `./setup.sh`, and press "return".
+3. At this point, the screen shows that you should run `./setup.sh` again. Then type `./setup.sh` and press "return". Or simply press the uparrow key to repeat the last command and press "return". This setup script is trying to download and install Boost and Bullet, etc.
+4. After the setup has finished, in the terminal, type `vi ~/.bash_profile` and press "return". This will open the .bash_profile file with vim. Now press `i`, but without pressing "return". Use arrow keys to navigate the cursor to the end of the file content and hit "return" once or twice. At the start of the new line, type `export DYLD_LIBRARY_PATH=H=/XXX:$DYLD_LIBRARY_PATH`, and replace the `/XXX` part with the absolute path to the folder `NTRTsim/env/lib`. Press "esc", which will get you out of the editing mode. Then press `:wq` and hit "return", to save the file and quit vim.
+5. Type `cd bin` and press "return". Type `./build.sh` and press "return".
 
 3/19/15 - Warning: OS X Setup/Build Failures
 ---------
@@ -27,7 +37,7 @@ which contains the main page of the DOxygen documentation.
 The most accessible examples of tensegrity structures are in the
 examples directory, we recommend starting with src/examples/3_prism
 Additional README.dox files can be found in each folder with
-additional information about that application or library. Additional 
+additional information about that application or library. Additional
 examples can be found in example folders NestedTetrahedrons, SUPERball,
 learningSpines or development folders: dev/tests and dev/btietz.
 
@@ -39,9 +49,9 @@ Documentation
 --------
 
 Doxygen documentation can be compiled in the source directory
-(run "doxygen Doxyfile" when in src). Under Ubuntu 14.04, installing 
-doxygen and graphviz (required) can be done by running "sudo apt-get 
-install doxygen graphviz". HTML-based documentation can then be found 
+(run "doxygen Doxyfile" when in src). Under Ubuntu 14.04, installing
+doxygen and graphviz (required) can be done by running "sudo apt-get
+install doxygen graphviz". HTML-based documentation can then be found
 under src/DoxyDocs/index.html.
 
 Pre-built documentation for the repository can be found here:
@@ -72,52 +82,52 @@ http://ntrt.perryb.ca/bb/waterfall
 About Tensegrity Robots and The Goals of NTRT
 ----------
 Tensegrity Robots are a biologically inspired approach to building
-robots based on the tension networks of tensegrity structures, 
+robots based on the tension networks of tensegrity structures,
 which have no rigid connections between elements.  The NTRT was created
-to enable: the rapid co-exploration of structures and controls in 
-a physics based simulation environment; the development of tensegrity 
-robotics algorithms such as structural analysis, kinematics, and motion 
-planning; and the validation of the algorithms and controls on hardware 
+to enable: the rapid co-exploration of structures and controls in
+a physics based simulation environment; the development of tensegrity
+robotics algorithms such as structural analysis, kinematics, and motion
+planning; and the validation of the algorithms and controls on hardware
 prototypes of the tensegrity robots.
 
 The NTRT Simulator is a tensegrity-specific simulator built to run ontop
-of the Bullet Physics Engine, version 2.82.  The NTRTsim includes a set 
-of builder tools for specifying rods and strings as a set of points in 
-Cartesian coordinates.  Structures built out of these rods and strings 
-can be specified as a tree of substructures, and can be rotated and 
-moved, which greatly simplifies the task of creating new tensegrity 
-structures.  The NTRTsim also includes libraries for controllers such as 
-Central Pattern Generators and a machine learning framework, which 
-allows users to specify their own learning algorithms.  For strings, 
-instead of the default Bullet softbodies, which are not physically 
-accurate, we used a two point linear string model using Hooke's law 
+of the Bullet Physics Engine, version 2.82.  The NTRTsim includes a set
+of builder tools for specifying rods and strings as a set of points in
+Cartesian coordinates.  Structures built out of these rods and strings
+can be specified as a tree of substructures, and can be rotated and
+moved, which greatly simplifies the task of creating new tensegrity
+structures.  The NTRTsim also includes libraries for controllers such as
+Central Pattern Generators and a machine learning framework, which
+allows users to specify their own learning algorithms.  For strings,
+instead of the default Bullet softbodies, which are not physically
+accurate, we used a two point linear string model using Hooke's law
 forces with a linear damping term. We also have a contact dynamics module
 for the cables, allowing them to interact with the structure and the environment.
-Finally, terrains can be created, and the performance of the controller 
+Finally, terrains can be created, and the performance of the controller
 can be tested as the tensegrity robot moves through the simulated world.
 
 Publications and Simulator Validation
 ----------------
 
-We have published a 
-[number of research papers](http://www.magicalrobot.org/BeingHuman/vytas-sunspirals-publications) 
-using NTRT. Many of the models are available in the simulator. 
-If you have questions on which models correspond to which paper, 
+We have published a
+[number of research papers](http://www.magicalrobot.org/BeingHuman/vytas-sunspirals-publications)
+using NTRT. Many of the models are available in the simulator.
+If you have questions on which models correspond to which paper,
 feel free to contact the authors at ntrtusers [at] lists [dot] nasa [dot] gov
 
-We do our best to ensure the models in the simulator are physically 
-realistic. A summary of the tests we do are available in 
-[this video](https://youtu.be/VRdKwPsjmcI), and 
+We do our best to ensure the models in the simulator are physically
+realistic. A summary of the tests we do are available in
+[this video](https://youtu.be/VRdKwPsjmcI), and
 [this paper](http://www.sunspiral.org/vytas/cv/JRSI_tensegrity_final_releasable.pdf).
 
 Mailing List
 ----------
-All bugs, feature requests, and general discussion regarding NTRT should 
+All bugs, feature requests, and general discussion regarding NTRT should
 be sent to the NTRT user mailing list:
 
 ntrtusers [at] lists [dot] nasa [dot] gov
 
-To subscribe to this list, send an empty email message with the subject 
+To subscribe to this list, send an empty email message with the subject
 'subscribe' (without the quotes) to
 
 ntrtusers-request [at] lists [dot] nasa [dot] gov
