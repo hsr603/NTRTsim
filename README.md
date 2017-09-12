@@ -11,6 +11,8 @@ This repository is forked to make changes so that NTRT can now be built on mac r
 4. After the setup has finished, in the terminal, type `vi ~/.bash_profile` and press "return". This will open the .bash_profile file with vim. Now press `i`, but without pressing "return". Use arrow keys to navigate the cursor to the end of the file content and hit "return" once or twice. At the start of the new line, type `export DYLD_LIBRARY_PATH=H=/XXX:$DYLD_LIBRARY_PATH`, and replace the `/XXX` part with the absolute path to the folder `NTRTsim/env/lib`. Press "esc", which will get you out of the editing mode. Then press `:wq` and hit "return", to save the file and quit vim. Exit Terminal, and restart Terminal.
 5. `cd` into `NTRTsim/bin/` directory. Type `./build.sh` and press "return".
 
+If you are re-installing some dependent packages, then jump Step 4 as you have already added the line before.
+
 3/19/15 - Warning: OS X Setup/Build Failures
 ---------
 Currently the simulator is not compiling under OS X. We hope to have this resolved soon. In the meantime if you wish to use the simulator your best bet is to install a Linux VM and install NTRT there. In the near future we hope to include a .vmdk which contains Ubuntu pre-installed with NTRT and supporting tools/libraries -- the INSTALL file will be updated onec that is complete (currently aiming for ~3/22/15).
