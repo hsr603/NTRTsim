@@ -1,6 +1,6 @@
 NASA Tensegrity Robotics Toolkit
 ===============
-11/09/2017
+## 11/09/2017 NTRTsim for macOS
 
 This repository is forked to make changes so that NTRT can now be built on mac running Sierra (10.12).
 
@@ -8,8 +8,8 @@ This repository is forked to make changes so that NTRT can now be built on mac r
 1. Open Terminal, and `cd` into the NTRTsim directory.
 2. Type `./setup.sh`, and press "return".
 3. At this point, the screen shows that you should run `./setup.sh` again. Then type `./setup.sh` and press "return". Or simply press the uparrow key to repeat the last command and press "return". This setup script is trying to download and install Boost and Bullet, etc.
-4. After the setup has finished, in the terminal, type `vi ~/.bash_profile` and press "return". This will open the .bash_profile file with vim. Now press `i`, but without pressing "return". Use arrow keys to navigate the cursor to the end of the file content and hit "return" once or twice. At the start of the new line, type `export DYLD_LIBRARY_PATH=H=/XXX:$DYLD_LIBRARY_PATH`, and replace the `/XXX` part with the absolute path to the folder `NTRTsim/env/lib`. Press "esc", which will get you out of the editing mode. Then press `:wq` and hit "return", to save the file and quit vim.
-5. Type `cd bin` and press "return". Type `./build.sh` and press "return".
+4. After the setup has finished, in the terminal, type `vi ~/.bash_profile` and press "return". This will open the .bash_profile file with vim. Now press `i`, but without pressing "return". Use arrow keys to navigate the cursor to the end of the file content and hit "return" once or twice. At the start of the new line, type `export DYLD_LIBRARY_PATH=H=/XXX:$DYLD_LIBRARY_PATH`, and replace the `/XXX` part with the absolute path to the folder `NTRTsim/env/lib`. Press "esc", which will get you out of the editing mode. Then press `:wq` and hit "return", to save the file and quit vim. Exit Terminal, and restart Terminal.
+5. `cd` into `NTRTsim/bin/` directory. Type `./build.sh` and press "return".
 
 3/19/15 - Warning: OS X Setup/Build Failures
 ---------
