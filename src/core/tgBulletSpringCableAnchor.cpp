@@ -2,13 +2,13 @@
  * Copyright © 2012, United States Government, as represented by the
  * Administrator of the National Aeronautics and Space Administration.
  * All rights reserved.
- * 
+ *
  * The NASA Tensegrity Robotics Toolkit (NTRT) v1 platform is licensed
  * under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0.
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
@@ -21,7 +21,7 @@
  * @brief Definitions of class tgBulletSpringCableAnchor.
  * $Id$
  */
- 
+
 #include "tgBulletSpringCableAnchor.h"
 
 // The BulletPhysics library
@@ -61,7 +61,7 @@ tgBulletSpringCableAnchor::tgBulletSpringCableAnchor(btRigidBody * body,
   manifold(m)
 {
 	assert(body);
-	
+
 	// Ensure we're either not using a manifold, or we currently have the right manifold
 	assert(manifold == NULL || body == manifold->getBody0() || body == manifold->getBody1());
 }
@@ -69,7 +69,7 @@ tgBulletSpringCableAnchor::tgBulletSpringCableAnchor(btRigidBody * body,
 tgBulletSpringCableAnchor::~tgBulletSpringCableAnchor()
 {
     // World will delete attached body, bullet owns the manifolds
-    
+
 }
 
 // This returns current position relative to the rigidbody.
@@ -98,43 +98,43 @@ bool tgBulletSpringCableAnchor::setWorldPosition(btVector3& newPos)
 		bool useB = true;
 		if (manifold->getBody0() != attachedBody)
 		{
-			useB = false;			
+			useB = false;
 		}
-		
+
 		if(useB || manifold->getBody1() == attachedBody)
-		{	
+		{
 			btScalar length = INFINITY;
-			
+
 			int n = manifold->getNumContacts();
-			
+
 			btVector3 contactPos = getWorldPosition();
 			btVector3 newNormal = contactNormal;
 			btScalar dist = 0.0;
-			
+
 			// Find closest contact point in this manifold
 			for (int p = 0; p < n; p++)
 			{
 				const btManifoldPoint& pt = manifold->getContactPoint(p);
-				
+
 				// Original position picked at beginning
 				btVector3 pos = useB ? pt.m_positionWorldOnA : pt.m_positionWorldOnB;
-				
+
 				btScalar contactDist = (pos - newPos).length();
-				
+
 				if (contactDist < length)
 				{
 					length = contactDist;
 					contactPos = pos;
-					
+
 					btScalar directionSign = useB ? btScalar(1.0) : btScalar(-1.0);
-					
+
 #ifdef USE_BASIS
 					newNormal = attachedBody->getWorldTransform().inverse().getBasis() * pt.m_normalWorldOnB * directionSign;
 #else
 					newNormal = pt.m_normalWorldOnB * directionSign;
 #endif
 					dist = pt.getDistance();
-					
+
 #ifdef VERBOSE
 					if (n >= 2)
 					{
@@ -145,12 +145,12 @@ bool tgBulletSpringCableAnchor::setWorldPosition(btVector3& newPos)
                     (void) dist;
 #endif
 				}
-				
+
 			}
-			
+
 			// We've lost this contact for some reason, skip update and delete
 			//if (!(dist > 0.0 && length < 0.01))
-			{	
+			{
 				// If contact is sufficiently close, update
 				if (length < 0.1)
 				{
@@ -159,7 +159,7 @@ bool tgBulletSpringCableAnchor::setWorldPosition(btVector3& newPos)
 					// Just deleting at this stage is better for sliding, but worse for contact with multiple bodies
 					attachedRelativeOriginalPosition = attachedBody->getWorldTransform().inverse() *
 							   newPos;
-					
+
 					if ((newNormal + contactNormal).length() < 0.5)
 					{
                         #ifdef VERBOSE
@@ -170,11 +170,11 @@ bool tgBulletSpringCableAnchor::setWorldPosition(btVector3& newPos)
 					{
 						ret = true;
 					}
-					
-	// Update again here in case we have the original manifold??			
+
+	// Update again here in case we have the original manifold??
 	#ifndef SKIP_CONTACT_UPDATE
 					contactNormal = newNormal;
-	#endif	
+	#endif
 				}
 				// Check if the update was bad based on the original position, if not delete
 				else if ( (getWorldPosition() - contactPos).length() <= 0.1)
@@ -194,9 +194,9 @@ bool tgBulletSpringCableAnchor::setWorldPosition(btVector3& newPos)
 	else
 	{
 		std::cerr << "Tried to update a static anchor" << std::endl;
-		// This will return as a delete, make sure you check the anchor is not permanent		
+		// This will return as a delete, make sure you check the anchor is not permanent
 	}
-	
+
 	return ret;
 }
 
@@ -238,7 +238,7 @@ bool tgBulletSpringCableAnchor::updateManifold(btPersistentManifold* m)
 			//manifold = m;
 			ret = true;
 		}
-		
+
 		// If we updated, ensure the new contact normal is good
 		if(ret)
 		{
@@ -266,46 +266,46 @@ bool tgBulletSpringCableAnchor::updateManifold(btPersistentManifold* m)
         std::cout << "Failed to update manifold!" << std::endl;
     }
 #endif
-	
+
 	return ret;
 }
 
 std::pair<btScalar, btVector3> tgBulletSpringCableAnchor::getManifoldDistance(btPersistentManifold* m) const
 {
 	bool useB = true;
-	
+
 	btScalar length = INFINITY;
 	btVector3 newNormal = contactNormal;
-	
+
     if (!permanent)
     {
         if (m->getBody0() != attachedBody)
         {
-            useB = false;			
+            useB = false;
         }
         if(useB || m->getBody1() == attachedBody)
-        {	
-                
+        {
+
             int n = m->getNumContacts();
-            
+
             btVector3 contactPos = getWorldPosition();
             btScalar dist = 0.0;
             for (int p = 0; p < n; p++)
             {
                 const btManifoldPoint& pt = m->getContactPoint(p);
-                
+
                 // Original position picked at beginning
                 btVector3 pos = useB ? pt.m_positionWorldOnA : pt.m_positionWorldOnB;
-                
+
                 btScalar contactDist = (pos - getWorldPosition()).length();
-                
+
                 if (contactDist < length)
                 {
                     length = contactDist;
                     contactPos = pos;
-                    
+
                     btScalar directionSign = useB ? btScalar(1.0) : btScalar(-1.0);
-                    
+
                     if (length < 0.1)
                     {
                         #ifdef USE_BASIS
@@ -314,9 +314,9 @@ std::pair<btScalar, btVector3> tgBulletSpringCableAnchor::getManifoldDistance(bt
                         newNormal = pt.m_normalWorldOnB * directionSign;
                         #endif
                     }
-                    
+
                     dist = pt.getDistance();
-    #ifdef VERBOSE				
+    #ifdef VERBOSE
                     if (n >= 2)
                     {
                         std::cout << "Extra contacts!! " << p << " length " << length << " dist: " << dist << std::endl;
@@ -329,6 +329,6 @@ std::pair<btScalar, btVector3> tgBulletSpringCableAnchor::getManifoldDistance(bt
             }
         }
     }
-	
-	return std::make_pair<btScalar, btVector3> (length, newNormal);
+
+	return std::make_pair(length, newNormal);
 }
