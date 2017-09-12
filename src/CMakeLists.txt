@@ -13,7 +13,7 @@ subdirs(
     tgcreator
     models
     controllers
-    #dev
+    dev
     examples
     yamlbuilder
 )
