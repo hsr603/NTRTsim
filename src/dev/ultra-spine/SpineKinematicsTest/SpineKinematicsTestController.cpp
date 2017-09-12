@@ -2,13 +2,13 @@
  * Copyright © 2012, United States Government, as represented by the
  * Administrator of the National Aeronautics and Space Administration.
  * All rights reserved.
- * 
+ *
  * The NASA Tensegrity Robotics Toolkit (NTRT) v1 platform is licensed
  * under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0.
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
@@ -73,7 +73,7 @@ SpineKinematicsTestController::SpineKinematicsTestController(double startTime,
 }
 
 /**
- * The initializeActuators method is call in onSetup to put pointers to 
+ * The initializeActuators method is call in onSetup to put pointers to
  * specific actuators in the cablesWithTags array, as well as store the initial
  * rest lengths in the initialRL map.
  */
@@ -86,7 +86,7 @@ void SpineKinematicsTestController::initializeActuators(TensegrityModel& subject
   std::cout << "The following cables were found and will be controlled: "
 	    << std::endl;
   //Iterate through array and output strings to command line
-  for (std::size_t i = 0; i < foundActuators.size(); i ++) {	
+  for (std::size_t i = 0; i < foundActuators.size(); i ++) {
     std::cout << foundActuators[i]->getTags() << std::endl;
     // Also, add the rest length of the actuator at this time
     // to the list of all initial rest lengths.
@@ -111,14 +111,14 @@ void SpineKinematicsTestController::onSetup(TensegrityModel& subject)
   std::cout << "Setting up the HorizontalSpine controller." << std::endl;
   //	    << "Finding cables with tags: " << m_tagsToControl
   //	    << std::endl;
-  cablesWithTags = {};
+  cablesWithTags.clear();
   // For all the strings in the list, call initializeActuators.
   std::vector<std::string>::iterator it;
   for( it = m_tagsToControl.begin(); it < m_tagsToControl.end(); it++ ) {
     // Call the helper for this tag.
     initializeActuators(subject, *it);
   }
-  std::cout << "Finished setting up the controller." << std::endl;    
+  std::cout << "Finished setting up the controller." << std::endl;
 }
 
 void SpineKinematicsTestController::onStep(TensegrityModel& subject, double dt)
@@ -129,7 +129,7 @@ void SpineKinematicsTestController::onStep(TensegrityModel& subject, double dt)
   if( m_timePassed > m_startTime ) {
     // For each cable, check if its rest length is past the minimum,
     // otherwise adjust its length according to m_rate and dt.
-    for (std::size_t i = 0; i < cablesWithTags.size(); i ++) {	
+    for (std::size_t i = 0; i < cablesWithTags.size(); i ++) {
       double currRestLength = cablesWithTags[i]->getRestLength();
       // Calculate the minimum rest length for this cable.
       // Remember that m_minLength is a percent.
@@ -145,8 +145,6 @@ void SpineKinematicsTestController::onStep(TensegrityModel& subject, double dt)
 	//std::cout << "Next Rest Length: " << nextRestLength << std::endl;
 	cablesWithTags[i]->setControlInput(nextRestLength,dt);
       }
-    }   
+    }
   }
 }
-	
- 
